@@ -1,14 +1,11 @@
 import React from 'react';
-import {connect, Provider} from 'react-redux';
-import {createStructuredSelector} from 'reselect';
-
-import {SafeAreaView, ScrollView, StatusBar, Text, View} from 'react-native';
+import {Provider} from 'react-redux';
+import {StatusBar, Text, View} from 'react-native';
 
 import {store} from './src/redux/store';
 
-import {selectCountryDetails} from './src/redux/country-details/country-details.selectors';
+import ListView from './src/screens/list-view.component';
 
-import styles from './src/App.styles';
 import colors from './colors';
 
 class App extends React.Component {
@@ -16,17 +13,14 @@ class App extends React.Component {
   render() {
     return (
       <Provider store={store}>
-        <View style={{flex: 1}}>
+        <View>
           <Text>POC Project</Text>
           <StatusBar barStyle="default" backgroundColor={colors.grey} />
         </View>
+        <ListView />
       </Provider>
     );
   }
 }
-
-const mapStateToProps = createStructuredSelector({
-  countryDetails: selectCountryDetails,
-});
 
 export default App;
