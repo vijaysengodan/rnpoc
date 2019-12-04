@@ -19,6 +19,7 @@ const countryDetailsReducer = (state = INITIAL_STATE, action) => {
         ...state,
         countryDetails: action.payload,
         isFetching: false,
+        errorMessage: undefined,
       };
     case CountryDetailsActionTypes.GET_LIST_FAILURE:
       return {
