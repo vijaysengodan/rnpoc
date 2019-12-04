@@ -21,12 +21,15 @@ export const fetchCollectionsFailure = errorMessage => ({
 });
 
 export const fetchCollectionsStartAsync = () => {
+  //return fetchCollectionsStart();
   return dispatch => {
     dispatch(fetchCollectionsStart());
     fetch(apiUrls.listUrl)
-      .then(response => response.json)
-      .then(response => {
-        dispatch(fetchCollectionsSuccess(response));
+      .then(response => response.json())
+      .then(data => {
+        console.clear();
+        console.log('response - ', data);
+        dispatch(fetchCollectionsSuccess(data));
       })
       .catch(error => dispatch(fetchCollectionsFailure(error.message)));
   };
