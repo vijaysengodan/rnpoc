@@ -26,6 +26,12 @@ const countryDetailsReducer = (state = INITIAL_STATE, action) => {
         errorMessage: action.payload,
         isFetching: false,
       };
+    case CountryDetailsActionTypes.REFRESH_LIST:
+      return {
+        ...state,
+        countryDetails: action.payload,
+        isFetching: false,
+      };
     default:
       return state;
   }

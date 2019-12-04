@@ -17,6 +17,13 @@ const listViewStyles = StyleSheet.create({
     width: 50,
     textAlign: 'center',
   },
+  statusMsgStyle: {
+    fontFamily: fonts.regular,
+    color: colors.grayDark,
+    fontSize: 18,
+    textAlign: 'center',
+    marginBottom: 5,
+  },
 });
 
 export default listViewStyles;

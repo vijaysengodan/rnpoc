@@ -6,6 +6,8 @@ import {createStructuredSelector} from 'reselect';
 import {
   selectCountryDetails,
   selectTitle,
+  selectFailureMessage,
+  selectIsListFetching,
 } from '../redux/country-details/country-details.selectors';
 import {fetchCollectionsStartAsync} from '../redux/country-details/country-details.actions';
 
@@ -34,7 +36,34 @@ class ListView extends React.Component {
   }
 
   render() {
-    const {countryDetails, title} = this.props;
+    const {
+      countryDetails,
+      title,
+      isFetching,
+      failureMessage,
+      dispatch,
+    } = this.props;
+    //Show the progress message during the api call..
+    if (isFetching) {
+      return (
+        <View>
+          <Text style={listViewStyles.statusMsgStyle}>
+            Loading the content....
+          </Text>
+        </View>
+      );
+    }
+    //Show the failure message in case of api call failed..
+    if (failureMessage) {
+      return (
+        <View>
+          <Text style={listViewStyles.statusMsgStyle}>
+            Failed loading the content
+          </Text>
+        </View>
+      );
+    }
+    //render the falt list once we have the data..
     return (
       <View>
         <Text style={listViewStyles.titleStyle}>{title}</Text>
@@ -57,6 +86,8 @@ class ListView extends React.Component {
 const mapStateToProps = createStructuredSelector({
   countryDetails: selectCountryDetails,
   title: selectTitle,
+  failureMessage: selectFailureMessage,
+  isFetching: selectIsListFetching,
 });
 
 const mapDispatchToProps = dispatch => ({

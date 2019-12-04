@@ -12,3 +12,14 @@ export const selectCountryDetails = createSelector(
 export const selectTitle = createSelector([selectCountry], countryList =>
   countryList.countryDetails ? countryList.countryDetails.title : '',
 );
+
+//Selects the fetching status..
+export const selectIsListFetching = createSelector(
+  [selectCountry],
+  countryList => countryList.isFetching,
+);
+
+export const selectFailureMessage = createSelector(
+  [selectCountry],
+  countryList => countryList.errorMessage,
+);
