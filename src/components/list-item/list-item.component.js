@@ -10,7 +10,6 @@ const ListItem = ({item}) => {
         source={item.imageHref ? {uri: item.imageHref} : null}
         style={[listItemStyles.imageStyle]}
       />
-
       <Text style={listItemStyles.nameTextStyle}>{item.description}</Text>
       <Text>
         ...........................................................................................................

@@ -2,8 +2,6 @@ import {StyleSheet} from 'react-native';
 import colors from '../../../colors';
 import fonts from '../../../fonts';
 
-const higherMargin = 5;
-
 const listItemStyles = StyleSheet.create({
   imageStyle: {
     backgroundColor: colors.grayUltraLight,
@@ -24,11 +22,7 @@ const listItemStyles = StyleSheet.create({
     fontSize: 18,
     marginLeft: 20,
     marginRight: 20,
-    marginBottom: higherMargin,
-  },
-  separatorStyle: {
-    backgroundColor: colors.grayLight,
-    height: 0.5,
+    marginBottom: 5,
   },
 });
 

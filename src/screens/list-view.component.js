@@ -1,16 +1,25 @@
 import React from 'react';
-import {FlatList, View, Text} from 'react-native';
+import {FlatList, View, Text, Button} from 'react-native';
 
 import {connect} from 'react-redux';
 import {createStructuredSelector} from 'reselect';
-import {selectCountryDetails} from '../redux/country-details/country-details.selectors';
+import {
+  selectCountryDetails,
+  selectTitle,
+} from '../redux/country-details/country-details.selectors';
 import {fetchCollectionsStartAsync} from '../redux/country-details/country-details.actions';
 
 import {ListItem} from '../components/list-item/list-item.component';
+import listViewStyles from './list-view.styles';
 
 class ListView extends React.Component {
   constructor() {
     super();
+    this.state = {
+      lastRefresh: Date(Date.now()).toString(),
+    };
+
+    this.refreshScreen = this.refreshScreen.bind(this);
   }
 
   componentDidMount() {
@@ -19,13 +28,24 @@ class ListView extends React.Component {
     fetchCollectionsStartAsync();
   }
 
+  refreshScreen() {
+    console.log('refresh');
+    this.setState({lastRefresh: Date(Date.now()).toString()});
+  }
+
   render() {
-    const {countryDetails} = this.props;
+    const {countryDetails, title} = this.props;
     return (
       <View>
-        <Text>Total - {countryDetails.rows.length}</Text>
+        <Text style={listViewStyles.titleStyle}>{title}</Text>
+        <Button
+          key="btnRefresh"
+          title="Refresh"
+          style={listViewStyles.buttonStyle}
+          onPress={this.refreshScreen}
+        />
         <FlatList
-          data={countryDetails.rows}
+          data={countryDetails ? countryDetails.rows : []}
           keyExtractor={(item, index) => index.toString()}
           renderItem={({item}) => <ListItem item={item} />}
         />
@@ -36,6 +56,7 @@ class ListView extends React.Component {
 
 const mapStateToProps = createStructuredSelector({
   countryDetails: selectCountryDetails,
+  title: selectTitle,
 });
 
 const mapDispatchToProps = dispatch => ({

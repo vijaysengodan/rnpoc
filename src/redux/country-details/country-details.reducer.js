@@ -6,6 +6,7 @@ const INITIAL_STATE = {
   errorMessage: undefined,
 };
 
+//Country details reducer to hold the entire cuntry json object..
 const countryDetailsReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case CountryDetailsActionTypes.GET_LIST_START:

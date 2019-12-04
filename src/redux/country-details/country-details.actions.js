@@ -21,7 +21,6 @@ export const fetchCollectionsFailure = errorMessage => ({
 });
 
 export const fetchCollectionsStartAsync = () => {
-  //return fetchCollectionsStart();
   return dispatch => {
     dispatch(fetchCollectionsStart());
     fetch(apiUrls.listUrl)

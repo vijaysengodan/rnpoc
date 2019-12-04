@@ -14,7 +14,6 @@ class App extends React.Component {
     return (
       <Provider store={store}>
         <View>
-          <Text>POC Project</Text>
           <StatusBar barStyle="default" backgroundColor={colors.grey} />
         </View>
         <ListView />
