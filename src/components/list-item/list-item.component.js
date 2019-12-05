@@ -11,9 +11,6 @@ const ListItem = ({item}) => {
         style={[listItemStyles.imageStyle]}
       />
       <Text style={listItemStyles.nameTextStyle}>{item.description}</Text>
-      <Text>
-        ...........................................................................................................
-      </Text>
     </View>
   );
 };

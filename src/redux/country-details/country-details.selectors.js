@@ -19,7 +19,14 @@ export const selectIsListFetching = createSelector(
   countryList => countryList.isFetching,
 );
 
+//Select the failure message
 export const selectFailureMessage = createSelector(
   [selectCountry],
   countryList => countryList.errorMessage,
+);
+
+//Selects the refreshing status..
+export const selectIsRefreshing = createSelector(
+  [selectCountry],
+  countryList => countryList.isRefreshing,
 );

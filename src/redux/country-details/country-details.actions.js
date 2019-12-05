@@ -1,5 +1,6 @@
 import CountryDetailsActionTypes from './country-details.actiontypes';
 import apiUrls from '../../../constants';
+import {apiCall} from '../../api/api';
 
 export const refreshContent = () => ({
   type: CountryDetailsActionTypes.REFRESH_LIST,
@@ -22,15 +23,23 @@ export const fetchCollectionsFailure = errorMessage => ({
   payload: errorMessage,
 });
 
+export const refreshCollectionAsync = () => {
+  return dispatch => {
+    dispatch(refreshContent());
+    apiCall(apiUrls.listUrl)
+      .then(data => {
+        dispatch(fetchCollectionsSuccess(data));
+      })
+      .catch(error => dispatch(fetchCollectionsFailure(error.message)));
+  };
+};
+
 //Fecthing aync data from service
 export const fetchCollectionsStartAsync = () => {
   return dispatch => {
     dispatch(fetchCollectionsStart());
-    fetch(apiUrls.listUrl)
-      .then(response => response.json())
+    apiCall(apiUrls.listUrl)
       .then(data => {
-        //console.clear();
-        //console.log('response - ', data);
         dispatch(fetchCollectionsSuccess(data));
       })
       .catch(error => dispatch(fetchCollectionsFailure(error.message)));

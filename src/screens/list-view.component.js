@@ -8,16 +8,22 @@ import {
   selectTitle,
   selectFailureMessage,
   selectIsListFetching,
+  selectIsRefreshing,
 } from '../redux/country-details/country-details.selectors';
-import {fetchCollectionsStartAsync} from '../redux/country-details/country-details.actions';
+import {
+  fetchCollectionsStartAsync,
+  refreshCollectionAsync,
+} from '../redux/country-details/country-details.actions';
 
 import {ListItem} from '../components/list-item/list-item.component';
+import {Progress} from '../components/progress/progress.component';
+
 import listViewStyles from './list-view.styles';
+import {ItemSeperator} from '../components/item-seperator/item-seperator.component';
 
 class ListView extends React.Component {
   constructor() {
     super();
-    this.refreshScreen = this.refreshScreen.bind(this);
   }
 
   componentDidMount() {
@@ -26,37 +32,25 @@ class ListView extends React.Component {
     fetchCollectionsStartAsync();
   }
 
-  refreshScreen() {
-    console.log('refresh');
-  }
-
   render() {
     const {
       countryDetails,
       title,
       isFetching,
       failureMessage,
-      dispatch,
+      isRefreshing,
+      refreshCollectionAsync,
     } = this.props;
     //Show the progress message during the api call..
-    if (isFetching) {
-      return (
-        <View>
-          <Text style={listViewStyles.statusMsgStyle}>
-            Loading the content....
-          </Text>
-        </View>
-      );
+    if (isFetching || isRefreshing) {
+      const message = isFetching
+        ? 'Loading the content...'
+        : 'Refreshing the content...';
+      return <Progress message={message} />;
     }
     //Show the failure message in case of api call failed..
     if (failureMessage) {
-      return (
-        <View>
-          <Text style={listViewStyles.statusMsgStyle}>
-            Failed loading the content
-          </Text>
-        </View>
-      );
+      return <Progress message={'Failed to load the content!!'} />;
     }
     //render the falt list once we have the data..
     return (
@@ -66,13 +60,15 @@ class ListView extends React.Component {
           key="btnRefresh"
           title="Refresh"
           style={listViewStyles.buttonStyle}
-          onPress={this.refreshScreen}
+          onPress={refreshCollectionAsync}
         />
         <FlatList
           initialNumToRender={3}
           data={countryDetails ? countryDetails.rows : []}
           keyExtractor={(item, index) => index.toString()}
           renderItem={({item}) => <ListItem item={item} />}
+          ItemSeparatorComponent={ItemSeperator}
+          refreshing={isRefreshing}
         />
       </View>
     );
@@ -84,10 +80,12 @@ const mapStateToProps = createStructuredSelector({
   title: selectTitle,
   failureMessage: selectFailureMessage,
   isFetching: selectIsListFetching,
+  isRefreshing: selectIsRefreshing,
 });
 
 const mapDispatchToProps = dispatch => ({
   fetchCollectionsStartAsync: () => dispatch(fetchCollectionsStartAsync()),
+  refreshCollectionAsync: () => dispatch(refreshCollectionAsync()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ListView);
