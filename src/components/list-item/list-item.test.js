@@ -1,12 +1,18 @@
 import React from 'react';
-import {shallow} from 'enzyme';
-import {configure} from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
 
 import {ListItem} from './list-item.component';
 
-configure({adapter: new Adapter()});
+import renderer from 'react-test-renderer';
 
-it('expect to render ListItem component', () => {
-  expect(shallow(<ListItem />)).toMatchSnapshot();
+it('list item renders correctly', () => {
+  const item = {
+    title: 'abc',
+    description: 'abc desc',
+    imgeHref: 'http://google.com/abc.png',
+  };
+  renderer.create(<ListItem item={item} />);
 });
+
+// it('expect to render ListItem component', () => {
+//   expect(shallow(<ListItem />)).toMatchSnapshot();
+// });

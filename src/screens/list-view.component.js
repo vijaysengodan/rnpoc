@@ -17,10 +17,6 @@ import listViewStyles from './list-view.styles';
 class ListView extends React.Component {
   constructor() {
     super();
-    this.state = {
-      lastRefresh: Date(Date.now()).toString(),
-    };
-
     this.refreshScreen = this.refreshScreen.bind(this);
   }
 
@@ -32,7 +28,6 @@ class ListView extends React.Component {
 
   refreshScreen() {
     console.log('refresh');
-    this.setState({lastRefresh: Date(Date.now()).toString()});
   }
 
   render() {
@@ -74,6 +69,7 @@ class ListView extends React.Component {
           onPress={this.refreshScreen}
         />
         <FlatList
+          initialNumToRender={3}
           data={countryDetails ? countryDetails.rows : []}
           keyExtractor={(item, index) => index.toString()}
           renderItem={({item}) => <ListItem item={item} />}

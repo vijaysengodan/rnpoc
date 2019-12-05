@@ -29,8 +29,8 @@ export const fetchCollectionsStartAsync = () => {
     fetch(apiUrls.listUrl)
       .then(response => response.json())
       .then(data => {
-        console.clear();
-        console.log('response - ', data);
+        //console.clear();
+        //console.log('response - ', data);
         dispatch(fetchCollectionsSuccess(data));
       })
       .catch(error => dispatch(fetchCollectionsFailure(error.message)));
